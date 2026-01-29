@@ -211,6 +211,16 @@
         </dependencies>
         <executions>
           <execution>
+            <id>default-check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>validate</phase>
+            <configuration>
+              <failOnViolation>false</failOnViolation>
+            </configuration>
+          </execution>
+          <execution>
             <id>nohttp-checkstyle-validation</id>
             <goals>
               <goal>check</goal>
