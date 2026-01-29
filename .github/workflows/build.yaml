@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,14 +21,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'maven'
+        server-id: github # Matches repository id in pom.xml
+        settings-env: GITHUB_TOKEN # Token to use for authentication
     - name: Set Project Version
       run: ./mvnw -B versions:set -DnewVersion=1.0.${{ github.run_number }} -DgenerateBackupPoms=false
-    - name: Build and Analyze with Maven
+    - name: Build, Analyze and Deploy
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed for PR info and Sonar
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: >
-        ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+        ./mvnw -B deploy org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         -Dsonar.projectKey=ezq134_spring-petclinic
         -Dsonar.organization=ezq134
         -Dsonar.host.url=https://sonarcloud.io
