@@ -39,3 +39,19 @@ jobs:
         -Dsonar.junit.reportPaths=target/surefire-reports
         -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
 
+    - name: Log in to the Container registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ghcr.io/ezq134/petclinic-service:latest
+          ghcr.io/ezq134/petclinic-service:${{ github.run_number }}
+
