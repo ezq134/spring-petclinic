@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+      - name: petclinic
+        image: ghcr.io/ezq134/petclinic-service:latest
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: ghcr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic-service
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30080
+  selector:
+    app: petclinic

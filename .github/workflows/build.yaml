@@ -55,3 +55,12 @@ jobs:
           ghcr.io/ezq134/petclinic-service:latest
           ghcr.io/ezq134/petclinic-service:${{ github.run_number }}
 
+  deploy:
+    name: Deploy to Rancher Desktop
+    needs: build
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v4
+    - name: Deploy to Kubernetes
+      run: kubectl apply -f k8s/
+
