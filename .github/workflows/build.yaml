@@ -76,7 +76,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Deploy to Kubernetes
       run: kubectl apply -f k8s/
-
+    
     - name: Send Failure Email (Deploy)
       if: failure()
       uses: dawidd6/action-send-mail@v3

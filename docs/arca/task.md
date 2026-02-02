@@ -1,0 +1,46 @@
+# GitHub Actions Setup
+
+- [x] Research project configuration <!-- id: 0 -->
+    - [x] Check for pom.xml <!-- id: 1 -->
+    - [x] Determine Java version <!-- id: 2 -->
+- [x] Create Implementation Plan <!-- id: 3 -->
+- [/] Create GitHub Actions Workflow <!-- id: 4 -->
+    - [x] Create .github/workflows/build.yaml <!-- id: 5 -->
+- [/] Verify Workflow <!-- id: 6 -->
+- [x] Add SonarCloud Analysis <!-- id: 7 -->
+- [/] Fix SonarCloud Test & Coverage Reports <!-- id: 8 -->
+    - [x] Configure JaCoCo XML generation in pom.xml <!-- id: 9 -->
+- [-] Fix SonarCloud Checkstyle Reports <!-- id: 10 -->
+    - [-] Update pom.xml with standard checkstyle execution <!-- id: 11 -->
+- [x] Implement Automated Versioning <!-- id: 12 -->
+- [x] Research Artifact Deployment Options <!-- id: 13 -->
+    - [x] Configure pom.xml for GitHub Packages <!-- id: 14 -->
+    - [x] Update build.yaml for deployment <!-- id: 15 -->
+- [x] Docker Integration <!-- id: 16 -->
+    - [x] Create Dockerfile <!-- id: 17 -->
+    - [x] Update GitHub Workflow to Build/Push Docker Image <!-- id: 18 -->
+- [/] Deploy to Rancher Desktop (Kubernetes) <!-- id: 19 -->
+    - [x] Create Kubernetes Manifests (Deployment, Service) <!-- id: 20 -->
+    - [x] Add Deploy step to GitHub Actions <!-- id: 21 -->
+- [ ] AI Failure Analysis Integration <!-- id: 22 -->
+    - [ ] Create Failure Handler Step in GitHub Actions <!-- id: 23 -->
+    - [ ] Design Python Script for LLM Log Analysis <!-- id: 24 -->
+- [x] Email Notification Integration <!-- id: 26 -->
+    - [x] Configure SMTP Secrets in GitHub <!-- id: 27 -->
+    - [x] Add Send Email step to GitHub Actions <!-- id: 28 -->
+- [/] AI Agent Phase 1: Foundation (CLI & Connectivity) <!-- id: 29 -->
+    - [x] Design Python Agent Architecture & Roadmap <!-- id: 30 -->
+    - [x] Implement CLI argument parsing <!-- id: 32 -->
+- [ ] AI Agent Phase 2: Log Retrieval & Processing <!-- id: 33 -->
+    - [ ] Implement GitHub API call to download logs <!-- id: 34 -->
+    - [ ] Add in-memory ZIP extraction logic <!-- id: 35 -->
+- [x] AI Agent Phase 3: LLM Integration <!-- id: 36 -->
+    - [x] Design context-aware prompt <!-- id: 37 -->
+    - [x] Implement OpenAI/Anthropic API integration <!-- id: 38 -->
+- [/] AI Agent Phase 4: Notification & Integration <!-- id: 39 -->
+    - [x] Implement SMTP email delivery <!-- id: 40 -->
+    - [ ] Update GHA build.yaml to call the agent <!-- id: 41 -->
+- [ ] AI Agent Phase 5: Portability & Deployment <!-- id: 42 -->
+    - [ ] Create requirements.txt for dependencies <!-- id: 43 -->
+    - [ ] Create Dockerfile for the Agent <!-- id: 44 -->
+    - [ ] Move Agent to a dedicated CD location <!-- id: 45 -->
