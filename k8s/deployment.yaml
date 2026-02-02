@@ -19,7 +19,7 @@ spec:
         - containerPort: 8080
         imagePullPolicy: Always
       imagePullSecrets:
-      - name: ghcr-secret
+      - name: ghcr-secet
 ---
 apiVersion: v1
 kind: Service
