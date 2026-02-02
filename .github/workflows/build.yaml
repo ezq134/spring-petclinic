@@ -64,7 +64,7 @@ jobs:
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.MAIL_PASSWORD }}
         subject: "🚨 Build Failed: ${{ github.repository }}"
-        to: ${{ secrets.MAIL_USERNAME }} # Set to your email or a specific recipient
+        to: vishal-rajesh.poptani@capgemini.com, vishal.poptani@zohomail.in
         from: GitHub Actions
         body: "The build job for ${{ github.run_number }} failed. Check logs at https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
@@ -86,7 +86,7 @@ jobs:
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.MAIL_PASSWORD }}
         subject: "🚨 Deployment Failed: ${{ github.repository }}"
-        to: ${{ secrets.MAIL_USERNAME }}
+        to: vishal-rajesh.poptani@capgemini.com, vishal.poptani@zohomail.in
         from: GitHub Actions
         body: "The deployment to Rancher Desktop failed for run ${{ github.run_number }}. Check logs at https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
