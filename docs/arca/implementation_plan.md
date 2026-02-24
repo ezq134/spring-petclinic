@@ -56,12 +56,17 @@ This plan outlines the creation of a GitHub Actions workflow to automatically bu
 Transition from simple failure emails to a **Generic AI Agent** capable of analyzing any GHA failure.
 
 #### Architecture: The Generic Python Agent
-- **Reusability**: By passing `--repo`, `--run-id`, and `--token` as arguments, the same script can be used for Petclinic, a Node.js app, or a Go service without modification.
+- **Reusability**: By passing `--repo`, `--run-id`, `--token`, and `--gemini-key` as arguments, the same script can be used for any GitHub repository.
 - **Trigger**: GitHub Action `if: failure()` hook passes the context variables.
-- **Log Source**: The Agent uses the GitHub REST API to download and inspect logs.
-- **LLM Reasoning**:
-    - **Prompt**: "You are a Senior DevOps Engineer. Analyze this failure. Be concise. Provide specific commands to fix it."
-- **Delivery**: Agent uses an SMTP library to email results.
+- **Enhanced Log Extraction**: 
+    - **Chronological Sorting**: Logs are sorted (1_step, 2_step) to ensure the AI follows the pipeline's natural progression.
+    - **Expanded Keywords**: Searches for `ERROR`, `FAIL`, `REFUSED`, `UNABLE`, `TIMEOUT`, `EXCEPTION`, `EXIT CODE`, and `UNABLE TO CONNECT`.
+    - **Context Window**: Captures 5 lines *before* and 10 lines *after* any match.
+    - **Git Noise Filtering**: Explicitly skips git checkout/commit messages to avoid false positives.
+- **LLM Reasoning (Gemini)**: 
+    - **Prompt**: Uses a Senior DevOps Persona with strict instructions to prioritize **Hard Failures** (Connectivity/Crashes) over **Soft Warnings** (Style/Lints).
+- **Delivery**: Agent uses `smtplib` to email results directly via Gmail SMTP.
+- **Portability (Phase 5)**: Containerized using `Dockerfile.arca` and `requirements.txt` for consistent execution on any runner.
 
 #### Implementation Roadmap
 1. **Generic Python Script (`scripts/failure_agent.py`)**: Designed to accept CLI arguments.

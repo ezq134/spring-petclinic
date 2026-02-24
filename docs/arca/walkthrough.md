@@ -90,10 +90,17 @@ Your next phase is to introduce an AI agent for failure analysis. The current se
 1.  **Observability**: SonarCloud and JaCoCo provide the metrics the AI needs to check quality.
 2.  **Access**: The Self-Hosted runner gives your future Python logic direct access to `kubectl logs` if a deployment fails.
 3.  **Hooks**:- [x] **Phase 1: Foundation**: Established CLI argument parsing for `--repo`, `--run-id`, etc.
-- [x] **Phase 2: Log Retrieval**: Implemented in-memory ZIP extraction to find "ERROR" lines.
-- [x] **Phase 3: LLM Integration**: Connected to Google Gemini (Free Tier) to generate analysis.
-- [x] **Phase 4: Notification**: Integrated SMTP for automatic email delivery.
-- [ ] **Phase 5: Portability (Upcoming)**: Finalizing the Dockerfile and GHA automation.
+- [x] **Phase 2: Log Retrieval**: Implemented chronological sorting and multi-match capture.
+- [x] **Phase 3: LLM Integration**: Connected to Google Gemini with strict "Hard Failure" prioritization.
+- [x] **Phase 4: Notification**: Integrated SMTP with "Context Window" log snippets for robust reporting.
+- [x] **Phase 5: Portability**: Created `Dockerfile.arca` and `requirements.txt` for containerized execution.
+
+## The "Silent Error" Challenge
+We solved a critical "Signal vs Noise" problem where Gemini was distracted by Checkstyle errors. By implementing:
+1. **Git Filtering**: Skipping checkout noise.
+2. **Multi-Match Capture**: Capturing up to 5 error candidates per file.
+3. **Context Windows**: Grabbing surrounding lines to tell the "story" of the crash.
+The agent now correctly identifies Kubernetes connection failures even when Checkstyle is failing.
 
 ## ARCA Agent: Logical Flow
 The agent operates as a **Sequential Relay Race**:

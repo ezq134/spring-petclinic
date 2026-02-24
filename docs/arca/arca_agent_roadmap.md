@@ -40,9 +40,9 @@ This roadmap breaks down the development of the AI DevOps agent into educational
 *   **Concepts Learned**: String Templates and Networking.
 *   **Outcome**: A developer receives an email with the subject "🚨 ARCA Analysis: Here is your fix".
 
-## Phase 5: The Loop - [IN PROGRESS]
-**Goal**: Make it fully autonomous.
+## Phase 5: The Loop - [COMPLETED]
+**Goal**: Make it fully autonomous and portable.
 *   **What we do**:
-    *   Dockerfile-ize the Python Agent.
-    *   Add a final step to the Petclinic `build.yaml` that triggers this agent only on `failure()`.
-*   **Outcome**: A "Self-Healing Ready" pipeline where every crash is automatically investigated.
+    *   Create `requirements.txt` and `Dockerfile.arca`.
+    *   Use `ENTRYPOINT` to allow dynamic argument passing to the container.
+*   **Outcome**: A "Self-Healing Ready" container that runs the agent anywhere.

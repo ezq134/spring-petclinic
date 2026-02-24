@@ -39,8 +39,9 @@
     - [x] Implement OpenAI/Anthropic API integration <!-- id: 38 -->
 - [/] AI Agent Phase 4: Notification & Integration <!-- id: 39 -->
     - [x] Implement SMTP email delivery <!-- id: 40 -->
+    - [x] Refine Log Filtering (Context Window & Keywords) <!-- id: 99 -->
     - [ ] Update GHA build.yaml to call the agent <!-- id: 41 -->
-- [ ] AI Agent Phase 5: Portability & Deployment <!-- id: 42 -->
-    - [ ] Create requirements.txt for dependencies <!-- id: 43 -->
-    - [ ] Create Dockerfile for the Agent <!-- id: 44 -->
-    - [ ] Move Agent to a dedicated CD location <!-- id: 45 -->
+- [/] AI Agent Phase 5: Portability & Deployment <!-- id: 42 -->
+    - [x] Create requirements.txt for dependencies <!-- id: 43 -->
+    - [x] Create Dockerfile for the Agent <!-- id: 44 -->
+    - [/] Move Agent to a dedicated CD location <!-- id: 45 -->
