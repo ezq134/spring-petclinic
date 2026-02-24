@@ -49,13 +49,22 @@ def analyze_with_ai(error_list, api_key):
     prompt = f"""
     You are a Senior DevOps Engineer. 
     Analyze the following build error logs from a GitHub Action.
-    Identify the ROOT CAUSE and provide a clear one-sentence fix.
+    
+    IMPORTANT RULES:
+    1. PRIORITIZE "Hard Failures" (Connection errors, Dial TCP, Connection Refused, Process Crashes).
+    2. IGNORE "Soft Warnings" like Checkstyle, Linter, or Formatting errors IF a hard failure is present.
+    3. Identify the ACTUAL ROOT CAUSE that stopped the pipeline and provide a clear one-sentence fix.
     
     Error logs:
     {error_context}
     """
     
     print(f"🧠 Asking Gemini for help...")
+    
+    # DEBUG: Print exactly what we are sending to the AI
+    print("\n--- 🛠️ DEBUG: AI PROMPT START ---")
+    print(prompt)
+    print("--- 🛠️ DEBUG: AI PROMPT END ---\n")
     
     try:
         response = model.generate_content(prompt)
@@ -79,18 +88,43 @@ def get_logs(repo, run_id, token):
         zip_data = io.BytesIO(response.content)
         
         with zipfile.ZipFile(zip_data) as zip_file:
-            file_names = zip_file.namelist()
+            # 1. THE CHRONOLOGICAL ORDER
+            # GitHub log files are named 1_step.txt, 2_step.txt, etc.
+            # Sorting ensures we see the pipeline failing in order.
+            file_names = sorted(zip_file.namelist())
             print(f"📦 Searching log files for errors...")
+            
+            # 2. THE BRAIN'S DICTIONARY
+            keywords = ["ERROR", "FAIL", "REFUSED", "UNABLE", "TIMEOUT", "EXCEPTION", "EXIT CODE", "UNABLE TO CONNECT"]
             
             for name in file_names:
                 if name.endswith(".txt") and "system" not in name:
                     content = zip_file.read(name).decode("utf-8")
                     lines = content.splitlines()
                     
-                    for line in lines:
-                        if "ERROR" in line.upper() or "FAIL" in line.upper():
-                            found_errors.append(f"File {name}: {line.strip()}")
-                            break 
+                    # 3. THE STORYTELLER (Searching for candidate errors)
+                    matches_in_file = 0
+                    for i in range(len(lines)):
+                        current_line = lines[i]
+                        line_upper = current_line.upper()
+                        
+                        if any(key in line_upper for key in keywords):
+                            # NOISE FILTER: Skip git checkout messages
+                            # (They often contain the word 'error' in commit messages)
+                            if "HEAD IS NOW AT" in line_upper or "CHECKOUT" in line_upper:
+                                continue
+                                
+                            print(f"   🔍 Found match in: {name} (Line {i+1})")
+                            start = max(0, i - 5)
+                            end = min(len(lines), i + 10)
+                            
+                            context_chunk = "\n".join(lines[start:end])
+                            found_errors.append(f"Step Log [{name}]:\n{context_chunk}\n---")
+                            
+                            # We keep looking to find later errors, but limit to 5 per file
+                            matches_in_file += 1
+                            if matches_in_file >= 5:
+                                break 
     else:
         print(f"❌ Failed to get logs. Error Code: {response.status_code}")
 
