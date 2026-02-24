@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: petclinic-service
 spec:
-  replicas: 1
+  replicas: "FIFTY"
   selector:
     matchLabels:
       app: petclinic
