@@ -95,7 +95,7 @@ def get_logs(repo, run_id, token):
             print(f"📦 Searching log files for errors...")
             
             # 2. THE BRAIN'S DICTIONARY
-            keywords = ["ERROR", "FAIL", "REFUSED", "UNABLE", "TIMEOUT", "EXCEPTION", "EXIT CODE", "UNABLE TO CONNECT"]
+            keywords = ["ERROR", "FAIL", "REFUSED", "UNABLE", "TIMEOUT", "EXCEPTION", "EXIT CODE", "UNABLE TO CONNECT", "INVALID PATCH"]
             
             for name in file_names:
                 if name.endswith(".txt") and "system" not in name:

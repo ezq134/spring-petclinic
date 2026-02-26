@@ -95,12 +95,12 @@ Your next phase is to introduce an AI agent for failure analysis. The current se
 - [x] **Phase 4: Notification**: Integrated SMTP with "Context Window" log snippets for robust reporting.
 - [x] **Phase 5: Portability**: Created `Dockerfile.arca` and `requirements.txt` for containerized execution.
 
-## The "Silent Error" Challenge
-We solved a critical "Signal vs Noise" problem where Gemini was distracted by Checkstyle errors. By implementing:
-1. **Git Filtering**: Skipping checkout noise.
-2. **Multi-Match Capture**: Capturing up to 5 error candidates per file.
-3. **Context Windows**: Grabbing surrounding lines to tell the "story" of the crash.
-The agent now correctly identifies Kubernetes connection failures even when Checkstyle is failing.
+## The "Invalid Patch" Victory 🏆
+We successfully simulated a "Hard Failure" by triggering an `Invalid Patch` error in Kubernetes. 
+1. **The Extension**: The user added `INVALID PATCH` to the keyword list.
+2. **The Catch**: The researcher found the error in the deployment logs.
+3. **The Brain**: Gemini correctly identified that the Kubernetes manifest had a structural error (the "patch" was invalid).
+4. **The result**: A perfect RCA and Fix were delivered via the terminal and email.
 
 ## ARCA Agent: Logical Flow
 The agent operates as a **Sequential Relay Race**:
